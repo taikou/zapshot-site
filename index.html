@@ -40,6 +40,9 @@ body{
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
 }
+@supports (overflow-x:clip){
+  html,body{overflow-x:clip}
+}
 body::before{
   content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.05;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
@@ -1053,8 +1056,10 @@ if(dive&&!reduced){
     const total=rect.height-innerHeight;
     const p=Math.min(1,Math.max(0,-rect.top/total));
     const camZ=p*CAM_TRAVEL;
-    const sway=Math.sin(p*Math.PI*2);
-    stage.style.transform=`translateX(${(sway*-52).toFixed(1)}px) rotate(${(sway*-1.4).toFixed(2)}deg)`;
+    if(fine){
+      const sway=Math.sin(p*Math.PI*2);
+      stage.style.transform=`translateX(${(sway*-52).toFixed(1)}px) rotate(${(sway*-1.4).toFixed(2)}deg)`;
+    }
     for(const c of cards){
       const z=c.z+camZ;
       const op=z>FADE_AT?Math.max(0,1-(z-FADE_AT)/FADE_LEN):Math.min(1,(z+2600)/700);
