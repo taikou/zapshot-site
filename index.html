@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zapshot — Daily Vlog Wall | By tonight, your vlog is already done.</title>
+<meta name="description" content="Tilt your phone for 2 seconds. Zero editing. Your day with friends stacks onto one wall — and becomes a vlog by night. Zapshot, the Daily Vlog Wall.">
+<meta property="og:title" content="Zapshot — Daily Vlog Wall">
+<meta property="og:description" content="Tilt for 2 seconds. Zero editing. By the end of the day, your vlog makes itself.">
+<meta property="og:image" content="assets/screens/3.png">
+<link rel="icon" href="assets/logo-mark.png">
+<link rel="apple-touch-icon" href="assets/logo-mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,800;1,900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d0d0b;
+  --bg2:#141412;
+  --ink:#f4f2ea;
+  --ink-dim:rgba(244,242,234,.62);
+  --ink-faint:rgba(244,242,234,.38);
+  --yellow:#f0e62a;
+  --yellow-deep:#d9cf1a;
+  --teal:#3ceaa7;
+  --line:rgba(244,242,234,.12);
+  --radius:20px;
+  --font-en:"Archivo",sans-serif;
+  --font-jp:"Archivo",sans-serif;
+  --font-mono:"Space Grotesk",monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--font-jp);
+  font-size:16px;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+}
+::selection{background:var(--yellow);color:#0d0d0b}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px;position:relative;z-index:2}
+
+/* ---------- nav ---------- */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  background:rgba(13,13,11,.72);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{
+  max-width:1200px;margin:0 auto;padding:0 24px;
+  display:flex;align-items:center;justify-content:space-between;height:64px;
+}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--font-en);font-weight:900;font-size:22px;letter-spacing:-.01em}
+.brand img{width:32px;height:32px;border-radius:9px}
+.brand img.wm,.foot-brand img.wm{width:auto;border-radius:0}
+.brand img.wm{height:21px}
+.foot-brand img.wm{height:19px}
+.nav-links{display:flex;gap:32px;align-items:center;font-size:13px;font-weight:500;letter-spacing:.06em}
+.nav-links a{color:var(--ink-dim);transition:color .2s}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a.active{color:var(--yellow)}
+.nav-links a.btn,.nav-links a.btn:hover{color:#0d0d0b}
+.progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:200;pointer-events:none}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--yellow));transition:width .1s linear}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--yellow);color:#0d0d0b;
+  font-family:var(--font-jp);font-weight:700;font-size:14px;
+  padding:10px 22px;border-radius:999px;
+  transition:transform .2s,box-shadow .2s;
+  letter-spacing:.02em;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(240,230,42,.25)}
+@media(max-width:760px){.nav-links{display:none}}
+
+/* ---------- hero ---------- */
+.hero{
+  min-height:100svh;
+  display:flex;align-items:center;
+  padding:130px 0 60px;
+  position:relative;overflow:hidden;
+}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+@media(max-width:960px){.hero-grid{grid-template-columns:1fr;gap:56px}}
+.kicker{
+  font-family:var(--font-mono);font-size:12px;letter-spacing:.32em;
+  color:var(--yellow);text-transform:uppercase;font-weight:500;
+  display:flex;align-items:center;gap:12px;margin-bottom:28px;
+}
+.kicker::before{content:"";width:32px;height:1px;background:var(--teal)}
+.hero h1{
+  font-family:var(--font-en);font-style:italic;font-weight:900;
+  font-size:clamp(42px,5.6vw,72px);
+  line-height:1.08;letter-spacing:-.015em;
+  margin-bottom:28px;position:relative;z-index:2;
+}
+.hero h1 .en{
+  font-family:var(--font-en);font-style:italic;font-weight:900;
+  color:var(--yellow);letter-spacing:-.01em;
+}
+.hero p.lead{
+  color:var(--ink-dim);font-size:16px;max-width:44ch;margin-bottom:40px;position:relative;z-index:2;
+}
+.hero-bolt{
+  position:absolute;left:-60px;bottom:-40px;width:420px;height:420px;
+  opacity:.06;pointer-events:none;z-index:0;
+  animation:boltFloat 9s ease-in-out infinite;
+}
+.hero-bolt.offset{
+  left:-74px;bottom:-26px;opacity:.05;
+  animation-delay:-.4s;
+}
+@keyframes boltFloat{0%,100%{transform:rotate(-8deg) translateY(0)}50%{transform:rotate(-5deg) translateY(-18px)}}
+.store-buttons{display:flex;gap:14px;flex-wrap:wrap;position:relative;z-index:2}
+.store-btn{
+  display:flex;align-items:center;gap:12px;
+  border:1px solid var(--line);border-radius:14px;
+  padding:12px 22px;transition:border-color .2s,background .2s;
+  background:rgba(244,242,234,.03);
+}
+.store-btn:hover{border-color:var(--yellow);background:rgba(240,230,42,.06)}
+.store-btn svg{width:22px;height:22px;fill:var(--ink)}
+.store-btn .s{display:block;font-size:10px;color:var(--ink-faint);letter-spacing:.08em;line-height:1.4}
+.store-btn .l{display:block;font-family:var(--font-en);font-weight:700;font-size:16px;line-height:1.2}
+.hero-glow{
+  position:absolute;width:720px;height:720px;border-radius:50%;
+  background:radial-gradient(circle,rgba(240,230,42,.14),transparent 65%);
+  right:-160px;top:6%;pointer-events:none;
+  transform:translate3d(var(--gx,0px),var(--gy,0px),0);
+  transition:transform .6s cubic-bezier(.2,.8,.2,1);
+}
+
+/* clip wall */
+.wall-frame{position:relative;height:620px}
+@media(max-width:960px){.wall-frame{height:520px;max-width:460px;margin:0 auto;width:100%}}
+.wall{
+  position:absolute;inset:0;display:flex;gap:16px;
+  transform:rotate(2.5deg) scale(1.04) translate3d(var(--wx,0px),var(--wy,0px),0);
+  transition:transform .4s cubic-bezier(.2,.8,.2,1);
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 14%,#000 86%,transparent);
+  mask-image:linear-gradient(180deg,transparent,#000 14%,#000 86%,transparent);
+}
+.wall .col{flex:1;display:flex;flex-direction:column;gap:16px}
+.wall .col-inner{display:flex;flex-direction:column;gap:16px;animation:wallUp 36s linear infinite}
+.wall .col.rev .col-inner{animation:wallDown 42s linear infinite}
+@keyframes wallUp{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+@keyframes wallDown{from{transform:translateY(-50%)}to{transform:translateY(0)}}
+.clip{
+  border-radius:16px;overflow:hidden;position:relative;
+  border:1px solid rgba(244,242,234,.1);
+  box-shadow:0 18px 50px rgba(0,0,0,.5);
+  flex-shrink:0;
+}
+.clip img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.clip:hover img{transform:scale(1.07)}
+.wall-frame:hover .col-inner{animation-play-state:paused}
+.clip .rec{
+  position:absolute;top:10px;left:10px;
+  display:flex;align-items:center;gap:6px;
+  font-family:var(--font-mono);font-size:9px;letter-spacing:.18em;
+  background:rgba(13,13,11,.55);backdrop-filter:blur(6px);
+  color:#fff;padding:4px 9px;border-radius:999px;
+}
+.clip .rec i{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:blink 1.6s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+.wall-chip{
+  position:absolute;z-index:5;left:50%;bottom:26px;transform:translateX(-50%) rotate(-2deg);
+  background:var(--yellow);color:#0d0d0b;border-radius:14px;
+  padding:12px 20px;box-shadow:0 16px 44px rgba(0,0,0,.55);
+  font-weight:700;font-size:13px;display:flex;align-items:center;gap:12px;
+  white-space:nowrap;
+}
+.wall-chip .bar{width:74px;height:6px;border-radius:99px;background:rgba(13,13,11,.18);overflow:hidden}
+.wall-chip .bar i{display:block;height:100%;width:40%;border-radius:99px;background:#0d0d0b;animation:compile 2.8s ease-in-out infinite}
+@keyframes compile{0%{width:12%}55%{width:86%}100%{width:12%}}
+.wall-chip .mono{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;font-weight:500}
+
+/* ---------- scroll dive ---------- */
+.scroll-hint{
+  position:absolute;bottom:24px;left:50%;transform:translateX(-50%);
+  font-family:var(--font-mono);font-size:10px;letter-spacing:.34em;
+  color:var(--ink-faint);text-transform:uppercase;z-index:5;
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+}
+.scroll-hint::after{
+  content:"";width:1px;height:36px;
+  background:linear-gradient(180deg,var(--yellow),transparent);
+  animation:hintPulse 1.8s ease-in-out infinite;
+}
+@keyframes hintPulse{0%,100%{opacity:.25}50%{opacity:1}}
+.dive{height:340vh;position:relative}
+.dive-sticky{
+  position:sticky;top:0;height:100vh;overflow:hidden;
+  background:
+    radial-gradient(60% 50% at 50% 55%,rgba(240,230,42,calc(.03 + var(--dp,0)*.10)),transparent 70%),
+    var(--bg);
+}
+.dive-stage{
+  position:absolute;inset:0;
+  perspective:950px;perspective-origin:50% 48%;
+  transform-style:preserve-3d;
+}
+.dive-card{
+  position:absolute;left:50%;top:50%;
+  border-radius:14px;overflow:hidden;
+  border:1px solid rgba(244,242,234,.14);
+  box-shadow:0 24px 70px rgba(0,0,0,.55);
+  will-change:transform,opacity;
+  transform-style:preserve-3d;backface-visibility:hidden;
+}
+.dive-card img{width:100%;height:100%;object-fit:cover;display:block}
+.dive-card .t{
+  position:absolute;top:8px;left:8px;
+  font-family:var(--font-mono);font-size:9px;letter-spacing:.16em;
+  background:rgba(13,13,11,.6);backdrop-filter:blur(4px);
+  color:#fff;padding:3px 8px;border-radius:999px;
+}
+.dive-card.chip{
+  display:flex;align-items:center;gap:8px;
+  background:var(--yellow);color:#0d0d0b;border:none;
+  padding:10px 18px;border-radius:999px;
+  font-weight:700;font-size:13px;white-space:nowrap;
+  box-shadow:0 14px 44px rgba(0,0,0,.45);overflow:visible;
+}
+.dive-card.chip svg{width:14px;height:14px;flex-shrink:0}
+.dive-card.chip.glass{
+  background:rgba(20,20,18,.62);color:var(--ink);
+  border:1px solid var(--line);backdrop-filter:blur(8px);
+  font-family:var(--font-mono);font-weight:500;font-size:11px;letter-spacing:.08em;
+}
+.dive-card.chip .wave{display:flex;gap:2.5px;align-items:center}
+.dive-card.chip .wave i{width:2.5px;border-radius:2px;background:var(--teal)}
+.dive-card.chip .wave i:nth-child(1){height:7px}
+.dive-card.chip .wave i:nth-child(2){height:13px}
+.dive-card.chip .wave i:nth-child(3){height:9px}
+.dive-card.chip .wave i:nth-child(4){height:15px}
+.dive-card.chip .wave i:nth-child(5){height:6px}
+.dive-card.dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--yellow);border:none;overflow:visible;
+  box-shadow:0 0 14px rgba(240,230,42,.9);
+}
+.dive-card.dot.g{background:var(--teal);box-shadow:0 0 14px rgba(60,234,167,.9)}
+.dive-phase{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-46%);
+  text-align:center;z-index:6;width:min(90vw,760px);
+  opacity:0;pointer-events:none;
+  transition:opacity .45s ease,transform .45s ease;
+}
+.dive-phase.on{opacity:1;transform:translate(-50%,-50%);pointer-events:auto}
+.dive-phase .clock{
+  font-family:var(--font-mono);font-size:12px;letter-spacing:.34em;
+  color:var(--yellow);display:block;margin-bottom:18px;
+}
+.dive-phase h3{
+  font-family:var(--font-en);font-style:italic;font-weight:900;
+  font-size:clamp(34px,5vw,62px);line-height:1.08;letter-spacing:-.015em;
+  text-shadow:0 4px 40px rgba(13,13,11,.9);
+}
+.dive-phase p{color:var(--ink-dim);margin-top:16px;font-size:15px}
+.dive-phase .btn{margin-top:28px}
+.dive-rail{
+  position:absolute;right:28px;top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;gap:10px;z-index:6;
+}
+.dive-rail i{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(244,242,234,.18);transition:background .3s,transform .3s;
+}
+.dive-rail i.on{background:var(--yellow);transform:scale(1.35)}
+@media(max-width:760px){
+  .dive{height:300vh}
+  .dive-card.m-hide{display:none}
+  .dive-rail{right:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  .dive{height:auto}
+  .dive-sticky{position:static;height:auto;padding:100px 0}
+  .dive-stage,.dive-rail,.scroll-hint{display:none}
+  .dive-phase{position:static;opacity:1;transform:none;margin:0 auto 64px;pointer-events:auto}
+}
+
+/* ---------- marquee ---------- */
+.marquee{
+  background:var(--yellow);color:#0d0d0b;
+  overflow:hidden;white-space:nowrap;
+  padding:14px 0;transform:rotate(-1.2deg);margin:40px -40px;
+  position:relative;z-index:3;
+}
+.marquee-inner{display:inline-flex;align-items:center;animation:scroll 28s linear infinite}
+.marquee:hover .marquee-inner{animation-play-state:paused}
+.marquee span{
+  font-family:var(--font-en);font-style:italic;font-weight:900;
+  font-size:20px;letter-spacing:.04em;text-transform:uppercase;
+  display:inline-flex;align-items:center;gap:56px;margin-right:56px;
+}
+.marquee svg{width:18px;height:18px;flex-shrink:0}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ---------- sections ---------- */
+section{padding:120px 0}
+.sec-head{margin-bottom:72px}
+.sec-head h2{
+  font-family:var(--font-en);font-style:italic;font-weight:900;
+  font-size:clamp(32px,3.8vw,50px);line-height:1.14;letter-spacing:-.01em;
+}
+.sec-head h2 .en{font-family:var(--font-en);font-style:italic;color:var(--yellow)}
+.sec-head p{color:var(--ink-dim);margin-top:18px;max-width:56ch}
+
+/* how it works */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+@media(max-width:860px){.steps{grid-template-columns:1fr}}
+.step{background:var(--bg2);padding:48px 36px 56px;position:relative;transition:background .3s}
+.step:hover{background:#191917}
+.step .num{
+  font-family:var(--font-en);font-style:italic;font-weight:900;
+  font-size:64px;color:transparent;-webkit-text-stroke:1px var(--yellow);
+  line-height:1;margin-bottom:24px;display:block;
+}
+.step .ico{margin-bottom:20px;color:var(--yellow)}
+.step .ico svg{width:34px;height:34px}
+.step h3{font-size:20px;font-weight:700;margin-bottom:14px;letter-spacing:.02em}
+.step p{color:var(--ink-dim);font-size:14px}
+.step .tag{
+  position:absolute;top:26px;right:26px;
+  font-family:var(--font-mono);font-size:10px;letter-spacing:.2em;
+  color:var(--teal);text-transform:uppercase;opacity:.75;
+}
+
+/* vlog styles */
+.styles-band{
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  background:var(--bg2);
+}
+.styles-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;perspective:1100px}
+@media(max-width:860px){.styles-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.styles-grid{grid-template-columns:1fr}}
+.style-card{
+  border:1px solid var(--line);border-radius:16px;padding:30px 26px;
+  transition:border-color .3s,transform .3s;position:relative;overflow:hidden;
+}
+.style-card::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(160deg,rgba(240,230,42,.09),transparent 55%);
+  opacity:0;transition:opacity .3s;
+}
+.style-card:hover{border-color:rgba(240,230,42,.5);transform:translateY(-4px)}
+.style-card:hover::after{opacity:1}
+.style-card .vis{
+  height:64px;margin-bottom:22px;color:var(--yellow);
+  display:flex;align-items:center;
+}
+.style-card .vis svg{height:52px;width:auto}
+.style-card .en{
+  font-family:var(--font-en);font-style:italic;font-weight:900;
+  font-size:22px;display:block;margin-bottom:10px;
+}
+.style-card p{font-size:13px;color:var(--ink-dim);position:relative;z-index:1}
+.style-card .idx{font-family:var(--font-mono);font-size:11px;color:var(--teal);opacity:.75;letter-spacing:.2em;display:block;margin-bottom:14px}
+
+/* features */
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;perspective:1100px}
+@media(max-width:960px){.features-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.features-grid{grid-template-columns:1fr}}
+.feature{
+  border:1px solid var(--line);border-radius:var(--radius);
+  padding:36px 30px;background:var(--bg2);
+  transition:border-color .3s,transform .3s;
+}
+.feature:hover{border-color:rgba(240,230,42,.45);transform:translateY(-4px)}
+.feature .f-ico{
+  width:46px;height:46px;border-radius:13px;
+  background:rgba(240,230,42,.09);border:1px solid rgba(240,230,42,.22);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--yellow);margin-bottom:22px;
+}
+.feature .f-ico svg{width:24px;height:24px}
+.feature .f-en{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--yellow);display:block;margin-bottom:12px;
+}
+.feature h3{font-size:19px;font-weight:700;margin-bottom:12px}
+.feature p{font-size:14px;color:var(--ink-dim)}
+
+/* gallery */
+.gallery{overflow:hidden;padding:120px 0 100px}
+.gallery-track{
+  display:flex;gap:22px;padding:0 24px;
+  overflow-x:auto;scroll-snap-type:x mandatory;
+  scrollbar-width:none;
+  cursor:grab;user-select:none;
+}
+.gallery-track.dragging{cursor:grabbing;scroll-snap-type:none}
+.gallery-track.dragging .shot{pointer-events:none}
+.gallery-track::-webkit-scrollbar{display:none}
+.gallery-track .shot{
+  flex:0 0 260px;border-radius:20px;overflow:hidden;
+  border:1px solid rgba(244,242,234,.1);
+  scroll-snap-align:center;
+  transition:transform .4s;
+}
+.gallery-track .shot:hover{transform:translateY(-8px)}
+.gallery-hint{
+  text-align:center;font-family:var(--font-mono);font-size:11px;
+  letter-spacing:.3em;color:var(--ink-faint);margin-top:36px;text-transform:uppercase;
+}
+
+/* press */
+.press{padding:20px 0 120px}
+.quote-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media(max-width:860px){.quote-grid{grid-template-columns:1fr}}
+.quote-card{
+  border:1px solid var(--line);border-radius:var(--radius);
+  padding:34px 30px 30px;background:var(--bg2);position:relative;
+  display:flex;flex-direction:column;gap:22px;
+  transition:border-color .3s,transform .3s;
+}
+.quote-card:hover{border-color:rgba(240,230,42,.45);transform:translateY(-4px)}
+.quote-card::before{
+  content:"\201C";font-family:var(--font-en);font-style:italic;font-weight:900;
+  font-size:64px;line-height:.6;color:var(--yellow);display:block;
+}
+.quote-card blockquote{
+  font-family:var(--font-en);font-style:italic;font-weight:600;
+  font-size:17px;line-height:1.55;color:var(--ink);flex:1;
+}
+.quote-card cite{
+  font-family:var(--font-mono);font-style:normal;font-size:11px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--teal);
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+}
+.quote-card cite .arrow{color:var(--ink-faint);transition:color .25s,transform .25s}
+.quote-card:hover cite .arrow{color:var(--yellow);transform:translate(3px,-3px)}
+
+/* ambassador */
+.amb{
+  border:1px solid var(--line);border-radius:28px;
+  position:relative;overflow:hidden;
+  background:var(--bg2);
+  display:grid;grid-template-columns:1.05fr .95fr;
+}
+@media(max-width:860px){.amb{grid-template-columns:1fr}}
+.amb-body{padding:72px 56px}
+@media(max-width:760px){.amb-body{padding:48px 28px}}
+.amb::before{
+  content:"AMBASSADOR";position:absolute;left:24px;bottom:-26px;
+  font-family:var(--font-en);font-style:italic;font-weight:900;
+  font-size:110px;color:rgba(240,230,42,.05);letter-spacing:-.02em;
+  pointer-events:none;white-space:nowrap;z-index:0;
+}
+.amb h2{font-family:var(--font-en);font-style:italic;font-size:clamp(27px,3.1vw,40px);font-weight:900;line-height:1.18;letter-spacing:-.01em;margin-bottom:18px;position:relative;z-index:1}
+.amb h2 .en{font-family:var(--font-en);font-style:italic;color:var(--yellow)}
+.amb p{color:var(--ink-dim);max-width:52ch;margin-bottom:36px;position:relative;z-index:1}
+.amb-visual{position:relative;min-height:320px}
+.amb-visual img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;
+  filter:saturate(.85) contrast(1.05);
+}
+.amb-visual::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,var(--bg2) 0%,rgba(20,20,18,.25) 30%,transparent 70%);
+}
+@media(max-width:860px){
+  .amb-visual{min-height:260px;order:-1}
+  .amb-visual::after{background:linear-gradient(0deg,var(--bg2) 0%,rgba(20,20,18,.2) 40%,transparent 80%)}
+}
+
+/* final cta */
+.final{
+  background:var(--yellow);color:#0d0d0b;
+  padding:130px 0;position:relative;overflow:hidden;
+}
+.final h2{
+  font-family:var(--font-en);font-style:italic;font-weight:900;
+  font-size:clamp(38px,5.2vw,66px);line-height:1.1;letter-spacing:-.015em;
+  margin-bottom:20px;
+}
+.final .wm-big{
+  height:1.18em;width:auto;display:inline-block;vertical-align:-.26em;
+}
+.final p{font-weight:500;opacity:.75;margin-bottom:44px;max-width:48ch}
+.final .store-btn{border-color:rgba(13,13,11,.25);background:rgba(13,13,11,.04)}
+.final .store-btn:hover{border-color:#0d0d0b;background:rgba(13,13,11,.08)}
+.final .store-btn svg{fill:#0d0d0b}
+.final .store-btn .s{color:rgba(13,13,11,.55)}
+.final-bolt{
+  position:absolute;right:-50px;top:50%;width:380px;height:380px;
+  transform:translateY(-50%) rotate(10deg);opacity:.1;pointer-events:none;
+}
+.final-bolt.offset{
+  right:-38px;transform:translateY(calc(-50% - 12px)) rotate(10deg);opacity:.3;
+}
+
+/* footer */
+footer{padding:72px 0 48px;border-top:1px solid var(--line);font-size:13px}
+.foot-grid{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;margin-bottom:56px}
+.foot-brand{display:flex;align-items:center;gap:10px;font-family:var(--font-en);font-weight:900;font-size:20px}
+.foot-brand img{width:28px;height:28px;border-radius:8px}
+.foot-col h4{
+  font-family:var(--font-mono);font-size:10px;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--teal);opacity:.65;margin-bottom:18px;font-weight:500;
+}
+.foot-col a{display:block;color:var(--ink-dim);margin-bottom:10px;transition:color .2s}
+.foot-col a:hover{color:var(--yellow)}
+.foot-bottom{
+  display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+  color:var(--ink-faint);border-top:1px solid var(--line);padding-top:28px;
+}
+.foot-col.company{max-width:280px}
+.foot-col.company .ph7-logo{height:38px;width:auto;filter:invert(1);opacity:.8;margin-bottom:18px}
+.foot-col.company dl div{display:grid;grid-template-columns:74px 1fr;gap:10px;margin-bottom:8px}
+.foot-col.company dt{color:var(--ink-faint);font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding-top:3px}
+.foot-col.company dd{color:var(--ink-dim);line-height:1.55}
+.foot-col.company dd a{color:var(--ink-dim);display:inline;margin:0}
+.foot-col.company dd a:hover{color:var(--yellow)}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .col-inner,.marquee-inner,.wall-chip .bar i,.clip .rec i,.hero-bolt{animation:none!important}
+  .reveal{opacity:1;transform:none;transition:none}
+}
+</style>
+</head>
+<body>
+
+<div class="progress" aria-hidden="true"><i></i></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="bolt" viewBox="0 0 24 24">
+      <path transform="translate(24,0) scale(-1,1)" d="M13.6 2.6c.5-.7 1.6-.3 1.5.6l-.9 6.2 4.9.7c.8.1 1.1 1.1.5 1.6L10.4 21.4c-.5.7-1.6.3-1.5-.6l.9-6.2-4.9-.7c-.8-.1-1.1-1.1-.5-1.6L13.6 2.6z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top"><img src="assets/logo-mark.png" alt=""><img class="wm" src="assets/wordmark-cream.png" alt="Zapshot"></a>
+    <div class="nav-links">
+      <a href="#how">HOW IT WORKS</a>
+      <a href="#features">FEATURES</a>
+      <a href="#gallery">APP</a>
+      <a href="#ambassador">AMBASSADOR</a>
+      <a class="btn" href="#download">Download</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-glow"></div>
+  <div class="wrap hero-grid">
+    <div style="position:relative">
+      <svg class="hero-bolt offset" aria-hidden="true"><use href="#bolt" fill="none" stroke="#3ceaa7" stroke-width=".55" /></svg>
+      <svg class="hero-bolt" aria-hidden="true"><use href="#bolt" fill="none" stroke="#f0e62a" stroke-width=".55" /></svg>
+      <div class="kicker">Daily Vlog Wall</div>
+      <h1>By tonight, your <span class="en">vlog</span> is already done.</h1>
+      <p class="lead">Tilt your phone for two seconds — that's it. Your clips and your friends' stack onto one wall all day long. Zero editing. By night, the whole day becomes one vlog.</p>
+      <div class="store-buttons">
+        <a class="store-btn" href="https://apps.apple.com/jp/app/zapshot-make-friends-closer/id1529511175" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          <span><span class="s">DOWNLOAD ON</span><span class="l">App Store</span></span>
+        </a>
+        <a class="store-btn" href="https://play.google.com/store/apps/details?id=ltd.ph7.zapshot" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M3.6 1.8c-.3.3-.5.8-.5 1.4v17.6c0 .6.2 1.1.5 1.4l.1.1 9.9-9.9v-.2L3.7 1.7l-.1.1zm13.2 6.9L13.9 12l2.9 3.3 3.8-2.2c1.1-.6 1.1-1.6 0-2.2l-3.8-2.2zM5 22.5c.4.2.9.2 1.5-.1l11.6-6.6-2.9-2.9L5 22.5zM5 1.5l10.2 9.6 2.9-2.9L6.5 1.6C5.9 1.3 5.4 1.3 5 1.5z"/></svg>
+          <span><span class="s">GET IT ON</span><span class="l">Google Play</span></span>
+        </a>
+      </div>
+    </div>
+    <div class="wall-frame reveal">
+      <div class="wall" aria-hidden="true">
+        <div class="col">
+          <div class="col-inner">
+            <div class="clip" style="height:150px"><img src="assets/clips/w1.png" alt=""><span class="rec"><i></i>LIVE</span></div>
+            <div class="clip" style="height:300px"><img src="assets/clips/tall1.png" alt=""></div>
+            <div class="clip" style="height:150px"><img src="assets/clips/w4.png" alt=""></div>
+            <div class="clip" style="height:150px"><img src="assets/clips/w3.png" alt=""></div>
+            <div class="clip" style="height:150px"><img src="assets/clips/w1.png" alt=""><span class="rec"><i></i>LIVE</span></div>
+            <div class="clip" style="height:300px"><img src="assets/clips/tall1.png" alt=""></div>
+            <div class="clip" style="height:150px"><img src="assets/clips/w4.png" alt=""></div>
+            <div class="clip" style="height:150px"><img src="assets/clips/w3.png" alt=""></div>
+          </div>
+        </div>
+        <div class="col rev">
+          <div class="col-inner">
+            <div class="clip" style="height:300px"><img src="assets/clips/tall2.png" alt=""></div>
+            <div class="clip" style="height:150px"><img src="assets/clips/w5.png" alt=""></div>
+            <div class="clip" style="height:150px"><img src="assets/clips/w2.png" alt=""><span class="rec"><i></i>REC</span></div>
+            <div class="clip" style="height:150px"><img src="assets/clips/w6.png" alt=""></div>
+            <div class="clip" style="height:300px"><img src="assets/clips/tall2.png" alt=""></div>
+            <div class="clip" style="height:150px"><img src="assets/clips/w5.png" alt=""></div>
+            <div class="clip" style="height:150px"><img src="assets/clips/w2.png" alt=""><span class="rec"><i></i>REC</span></div>
+            <div class="clip" style="height:150px"><img src="assets/clips/w6.png" alt=""></div>
+          </div>
+        </div>
+      </div>
+      <div class="wall-chip"><span>Exporting today's vlog</span><span class="bar"><i></i></span><span class="mono">AUTO</span></div>
+    </div>
+  </div>
+  <div class="scroll-hint">Scroll into today</div>
+</header>
+
+<section class="dive" id="dive" aria-label="A day on Zapshot">
+  <div class="dive-sticky">
+    <div class="dive-stage" aria-hidden="true">
+      <div class="dive-card" data-x="-26" data-y="-18" data-z="-350" data-r="-5" style="width:310px;height:202px"><img src="assets/clips/w1.png" alt=""><span class="t">08:04</span></div>
+      <div class="dive-card" data-x="24" data-y="14" data-z="-520" data-r="4" style="width:270px;height:176px"><img src="assets/clips/w4.png" alt=""><span class="t">09:12</span></div>
+      <div class="dive-card m-hide" data-x="-8" data-y="26" data-z="-700" data-r="-2" style="width:243px;height:324px"><img src="assets/clips/tall1.png" alt=""></div>
+      <div class="dive-card" data-x="30" data-y="-22" data-z="-900" data-r="6" style="width:284px;height:189px"><img src="assets/clips/w5.png" alt=""><span class="t">11:30</span></div>
+      <div class="dive-card m-hide" data-x="-32" data-y="8" data-z="-1100" data-r="-6" style="width:297px;height:196px"><img src="assets/clips/w2.png" alt=""><span class="t">13:37</span></div>
+      <div class="dive-card" data-x="6" data-y="-30" data-z="-1350" data-r="3" style="width:256px;height:338px"><img src="assets/clips/tall2.png" alt=""></div>
+      <div class="dive-card" data-x="26" data-y="6" data-z="-1250" data-r="4" style="width:338px;height:202px"><img src="assets/clips/c1.png" alt=""><span class="t">12:02</span></div>
+      <div class="dive-card chip" data-x="12" data-y="-12" data-z="-1150" data-r="-3"><svg><use href="#bolt" fill="#0d0d0b"/></svg>Zap the Gap</div>
+      <div class="dive-card m-hide" data-x="-7" data-y="-26" data-z="-1500" data-r="-2" style="width:270px;height:338px"><img src="assets/clips/c2.png" alt=""><span class="t">14:10</span></div>
+      <div class="dive-card m-hide" data-x="-24" data-y="-26" data-z="-1600" data-r="-4" style="width:270px;height:178px"><img src="assets/clips/w6.png" alt=""><span class="t">16:20</span></div>
+      <div class="dive-card chip glass" data-x="-26" data-y="-10" data-z="-1680" data-r="2"><span class="wave"><i></i><i></i><i></i><i></i><i></i></span>00:02</div>
+      <div class="dive-card m-hide" data-x="19" data-y="20" data-z="-1780" data-r="3" style="width:256px;height:324px"><img src="assets/clips/c3.png" alt=""></div>
+      <div class="dive-card" data-x="28" data-y="22" data-z="-1850" data-r="5" style="width:310px;height:202px"><img src="assets/clips/w3.png" alt=""><span class="t">18:05</span></div>
+      <div class="dive-card m-hide" data-x="-21" data-y="21" data-z="-2050" data-r="-4" style="width:270px;height:351px"><img src="assets/clips/c4.png" alt=""><span class="t">19:26</span></div>
+      <div class="dive-card chip" data-x="23" data-y="-19" data-z="-2250" data-r="4"><svg><use href="#bolt" fill="#0d0d0b"/></svg>&times;100</div>
+      <div class="dive-card dot" data-x="-15" data-y="-8" data-z="-600" data-r="0"></div>
+      <div class="dive-card dot g" data-x="17" data-y="9" data-z="-1050" data-r="0"></div>
+      <div class="dive-card dot" data-x="-9" data-y="14" data-z="-1450" data-r="0"></div>
+      <div class="dive-card dot g" data-x="11" data-y="-16" data-z="-1900" data-r="0"></div>
+      <div class="dive-card dot" data-x="-18" data-y="4" data-z="-2400" data-r="0"></div>
+      <div class="dive-card dot g" data-x="8" data-y="12" data-z="-2900" data-r="0"></div>
+      <div class="dive-card m-hide" data-x="-10" data-y="16" data-z="-2100" data-r="-3" style="width:243px;height:319px"><img src="assets/clips/tall1.png" alt=""></div>
+      <div class="dive-card" data-x="14" data-y="-14" data-z="-2350" data-r="2" style="width:284px;height:186px"><img src="assets/clips/w1.png" alt=""><span class="t">20:48</span></div>
+      <div class="dive-card m-hide" data-x="-28" data-y="-6" data-z="-2600" data-r="-5" style="width:270px;height:176px"><img src="assets/clips/w5.png" alt=""><span class="t">22:15</span></div>
+      <div class="dive-card" data-x="2" data-y="24" data-z="-2850" data-r="4" style="width:256px;height:332px"><img src="assets/clips/tall2.png" alt=""><span class="t">23:58</span></div>
+    </div>
+    <div class="dive-phase" data-band="0">
+      <span class="clock">08:04 AM</span>
+      <h3>One tilt.<br>Two seconds.</h3>
+      <p>The day starts stacking the moment you wake up.</p>
+    </div>
+    <div class="dive-phase" data-band="1">
+      <span class="clock">01:37 PM</span>
+      <h3>Clips pile up<br>all day long.</h3>
+      <p>Yours and your friends' — one shared wall, in real time.</p>
+    </div>
+    <div class="dive-phase" data-band="2">
+      <span class="clock">11:58 PM</span>
+      <h3>By night —<br>one vlog.</h3>
+      <p>Auto-edited. Pick a style, export in one tap.</p>
+      <a class="btn" href="#download">Get the app</a>
+    </div>
+    <div class="dive-rail" aria-hidden="true"><i></i><i></i><i></i></div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-inner">
+    <span>Zap the Gap <svg><use href="#bolt" fill="#0d0d0b"/></svg></span>
+    <span>Everyone's Day, One Wall <svg><use href="#bolt" fill="#0d0d0b"/></svg></span>
+    <span>Your Day, Auto-Edited <svg><use href="#bolt" fill="#0d0d0b"/></svg></span>
+    <span>Zap the Gap <svg><use href="#bolt" fill="#0d0d0b"/></svg></span>
+    <span>Everyone's Day, One Wall <svg><use href="#bolt" fill="#0d0d0b"/></svg></span>
+    <span>Your Day, Auto-Edited <svg><use href="#bolt" fill="#0d0d0b"/></svg></span>
+    <span>Zap the Gap <svg><use href="#bolt" fill="#0d0d0b"/></svg></span>
+    <span>Everyone's Day, One Wall <svg><use href="#bolt" fill="#0d0d0b"/></svg></span>
+    <span>Your Day, Auto-Edited <svg><use href="#bolt" fill="#0d0d0b"/></svg></span>
+    <span>Zap the Gap <svg><use href="#bolt" fill="#0d0d0b"/></svg></span>
+    <span>Everyone's Day, One Wall <svg><use href="#bolt" fill="#0d0d0b"/></svg></span>
+    <span>Your Day, Auto-Edited <svg><use href="#bolt" fill="#0d0d0b"/></svg></span>
+  </div>
+</div>
+
+<section id="how">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">How it works</div>
+      <h2>It never feels like filming.<br><span class="en">Tilt. Stack. Done.</span></h2>
+      <p>No captions, no perfect framing. Your day gets recorded without breaking its rhythm.</p>
+    </div>
+    <div class="steps reveal">
+      <div class="step">
+        <span class="tag">2 sec</span>
+        <span class="num">01</span>
+        <div class="ico"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="5" width="14" height="24" rx="3" transform="rotate(9 17 17)"/><path d="M5 9c-1.4 2.4-2 5.1-2 8M29 25c1.4-2.4 2-5.1 2-8" opacity=".55"/></svg></div>
+        <h3>Tilt, and it's captured</h3>
+        <p>Tilt your phone and a 2-second clip lands on the wall right there. Nothing to open, nothing to retake.</p>
+      </div>
+      <div class="step">
+        <span class="tag">All day</span>
+        <span class="num">02</span>
+        <div class="ico"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="4" y="5" width="26" height="7" rx="2.5"/><rect x="4" y="14" width="26" height="7" rx="2.5" opacity=".65"/><rect x="4" y="23" width="26" height="7" rx="2.5" opacity=".35"/></svg></div>
+        <h3>Everyone's day, one wall</h3>
+        <p>Your friends' clips keep stacking up all day. One glance at the wall tells you what everyone's up to.</p>
+      </div>
+      <div class="step">
+        <span class="tag">Auto</span>
+        <span class="num">03</span>
+        <div class="ico"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="26" height="19" rx="3"/><path d="M4 13.5h26M9.5 8l3-4.6M17 8l3-4.6M24.5 8l3-4.6M14.5 19.5l5 2.8-5 2.8v-5.6z"/></svg></div>
+        <h3>By night, it's a vlog</h3>
+        <p>At the end of the day, the clips edit themselves into a vlog. Pick a style and export in one tap.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="styles-band">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">Export Styles</div>
+      <h2>Four finishes. <span class="en">Pick your mood.</span></h2>
+      <p>Match the style to how the day felt. You'll never open an editing app again.</p>
+    </div>
+    <div class="styles-grid reveal">
+      <div class="style-card">
+        <span class="idx">STYLE / 01</span>
+        <div class="vis"><svg viewBox="0 0 64 52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="2" y="2" width="60" height="48" rx="7"/><path d="M26 18l14 8-14 8V18z" fill="currentColor" stroke="none"/></svg></div>
+        <span class="en">Vlog</span>
+        <p>The classic daily vlog. Your day at its own pace.</p>
+      </div>
+      <div class="style-card">
+        <span class="idx">STYLE / 02</span>
+        <div class="vis"><svg viewBox="0 0 64 52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="2" y="2" width="60" height="48" rx="5"/><path d="M12 2v48M52 2v48" opacity=".7"/><rect x="5.5" y="7" width="3.5" height="5" rx="1" fill="currentColor" stroke="none"/><rect x="5.5" y="17" width="3.5" height="5" rx="1" fill="currentColor" stroke="none"/><rect x="5.5" y="27" width="3.5" height="5" rx="1" fill="currentColor" stroke="none"/><rect x="5.5" y="37" width="3.5" height="5" rx="1" fill="currentColor" stroke="none"/><rect x="55" y="7" width="3.5" height="5" rx="1" fill="currentColor" stroke="none"/><rect x="55" y="17" width="3.5" height="5" rx="1" fill="currentColor" stroke="none"/><rect x="55" y="27" width="3.5" height="5" rx="1" fill="currentColor" stroke="none"/><rect x="55" y="37" width="3.5" height="5" rx="1" fill="currentColor" stroke="none"/></svg></div>
+        <span class="en">Film Strip</span>
+        <p>Frame by frame, like old film. A little nostalgic.</p>
+      </div>
+      <div class="style-card">
+        <span class="idx">STYLE / 03</span>
+        <div class="vis"><svg viewBox="0 0 64 52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="2" width="60" height="48" rx="7"/><path d="M22 15h20M18 22h28M24 29h16M27 36h10" opacity=".8"/></svg></div>
+        <span class="en">Credits</span>
+        <p>End-credits style. Today's cast: your usual friends.</p>
+      </div>
+      <div class="style-card">
+        <span class="idx">STYLE / 04</span>
+        <div class="vis"><svg viewBox="0 0 64 52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="2" y="2" width="60" height="48" rx="7"/><path d="M2 12h60M2 40h60" opacity=".7"/><path d="M32 19l2.4 5 5.6.7-4.1 3.8 1 5.5-4.9-2.7-4.9 2.7 1-5.5-4.1-3.8 5.6-.7 2.4-5z" fill="currentColor" stroke="none"/></svg></div>
+        <span class="en">Trailer</span>
+        <p>Dramatic, like a movie trailer. An ordinary day takes the lead role.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">Features</div>
+      <h2>Every feature brings you closer.<br><span class="en">Nothing else made the cut.</span></h2>
+    </div>
+    <div class="features-grid reveal">
+      <div class="feature">
+        <div class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="2.2" fill="currentColor" stroke="none"/><path d="M8.5 15.5a5 5 0 010-7M15.5 8.5a5 5 0 010 7" /><path d="M6 18a9 9 0 010-12M18 6a9 9 0 010 12" opacity=".55"/></svg></div>
+        <span class="f-en">Friend's Moments</span>
+        <h3>Share the moment, live</h3>
+        <p>Your close friends' "right now," as it happens. No read receipts, no follower counts — just a comfortable circle.</p>
+      </div>
+      <div class="feature">
+        <div class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="3" y="6" width="13" height="15" rx="3"/><rect x="12" y="3" width="9" height="10" rx="2.5" opacity=".65"/><circle cx="9.5" cy="13.5" r="2.6"/></svg></div>
+        <span class="f-en">ZapMoment</span>
+        <h3>Both sides, one shot</h3>
+        <p>Dual camera captures the view and your reaction together — the whole feel of the moment.</p>
+      </div>
+      <div class="feature">
+        <div class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 01-12.7 7.4L3 20l1.1-5.3A8.5 8.5 0 1121 11.5z"/><path d="M8.5 10v3M12 8.5v6M15.5 10v3"/></svg></div>
+        <span class="f-en">Type or Talk</span>
+        <h3>Type or talk</h3>
+        <p>Text or voice, whichever feels right. Either way, they'll hear you.</p>
+      </div>
+      <div class="feature">
+        <div class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="2" fill="currentColor" stroke="none" opacity=".9"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2" opacity=".55"/></svg></div>
+        <span class="f-en">Home Widget</span>
+        <h3>Friends on your home screen</h3>
+        <p>No app to open — your friends' clips flow straight into the widget.</p>
+      </div>
+      <div class="feature">
+        <div class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 10v4M8 7v10M12 4v16M16 7v10M20 10v4"/></svg></div>
+        <span class="f-en">ZapVoice</span>
+        <h3>An AI twin of your voice</h3>
+        <p>Type a message and it arrives in your voice. Even on busy days, the warmth stays in.</p>
+      </div>
+      <div class="feature">
+        <div class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <span class="f-en">Peekable Chat</span>
+        <h3>Peek before you join</h3>
+        <p>Sneak a look at other groups' conversations. Read the room before you walk in.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery" id="gallery">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">In the App</div>
+      <h2>Here's how it looks inside.</h2>
+    </div>
+  </div>
+  <div class="gallery-track reveal">
+    <div class="shot"><img src="assets/screens/1.png" alt="Everyone's day, one wall" loading="lazy"></div>
+    <div class="shot"><img src="assets/screens/2.png" alt="Your day, auto-edited" loading="lazy"></div>
+    <div class="shot"><img src="assets/screens/6.png" alt="Friend's Moments" loading="lazy"></div>
+    <div class="shot"><img src="assets/screens/5.png" alt="ZapMoment" loading="lazy"></div>
+    <div class="shot"><img src="assets/screens/9.png" alt="Home Widget" loading="lazy"></div>
+    <div class="shot"><img src="assets/screens/4.png" alt="Type or talk" loading="lazy"></div>
+    <div class="shot"><img src="assets/screens/7.png" alt="ZapVoice" loading="lazy"></div>
+    <div class="shot"><img src="assets/screens/8.png" alt="Peekable Chat" loading="lazy"></div>
+  </div>
+  <p class="gallery-hint">← Scroll →</p>
+</section>
+
+<section class="press" id="press">
+  <div class="wrap">
+    <div class="sec-head reveal" style="margin-bottom:48px">
+      <div class="kicker">Press</div>
+      <h2>In the news.</h2>
+    </div>
+    <div class="quote-grid reveal">
+      <a class="quote-card" href="https://dailybruin.com/2023/02/24/messaging-app-zapshot-brings-a-voice-to-daily-communications-for-generation-z" target="_blank" rel="noopener">
+        <blockquote>A new app is zapping the gap between the internet and interpersonal communication</blockquote>
+        <cite>Daily Bruin, UCLA <span class="arrow">&nearr;</span></cite>
+      </a>
+      <a class="quote-card" href="https://bruinlife.com/human-connection-in-a-digital-world/" target="_blank" rel="noopener">
+        <blockquote>Zapshot aims to give users a more personal way of communicating with others.</blockquote>
+        <cite>Bruin Life, UCLA <span class="arrow">&nearr;</span></cite>
+      </a>
+      <a class="quote-card" href="https://www.trendhunter.com/trends/student-life-with-zapshot" target="_blank" rel="noopener">
+        <blockquote>Student Life with Zapshot Enhances Communication with Artificial Intelligence</blockquote>
+        <cite>Trendhunter <span class="arrow">&nearr;</span></cite>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="ambassador">
+  <div class="wrap">
+    <div class="amb reveal">
+      <div class="amb-body">
+        <div class="kicker">Campus Ambassador</div>
+        <h2>Help build campus life,<br>with <span class="en">Zapshot</span>.</h2>
+        <p>We're looking for campus ambassadors to grow Zapshot at their university. Events, limited merch, and a direct line to the team — for anyone who wants to see how a social app is really made.</p>
+        <a class="btn" href="mailto:info@ph7.ltd?subject=Campus%20Ambassador%20Application">Apply as an ambassador</a>
+      </div>
+      <div class="amb-visual"><img src="assets/clips/amb.png" alt="Zapshot campus ambassadors" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<section class="final" id="download">
+  <svg class="final-bolt offset" aria-hidden="true"><use href="#bolt" fill="#3ceaa7"/></svg>
+  <svg class="final-bolt" aria-hidden="true"><use href="#bolt" fill="#0d0d0b"/></svg>
+  <div class="wrap">
+    <h2>Don't let today<br>just fade out. <img class="wm-big" src="assets/wordmark-black.png" alt="Zapshot"></h2>
+    <p>Free to download. Tilt for two seconds — your first vlog will be ready tonight.</p>
+    <div class="store-buttons">
+      <a class="store-btn" href="https://apps.apple.com/jp/app/zapshot-make-friends-closer/id1529511175" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        <span><span class="s">DOWNLOAD ON</span><span class="l">App Store</span></span>
+      </a>
+      <a class="store-btn" href="https://play.google.com/store/apps/details?id=ltd.ph7.zapshot" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M3.6 1.8c-.3.3-.5.8-.5 1.4v17.6c0 .6.2 1.1.5 1.4l.1.1 9.9-9.9v-.2L3.7 1.7l-.1.1zm13.2 6.9L13.9 12l2.9 3.3 3.8-2.2c1.1-.6 1.1-1.6 0-2.2l-3.8-2.2zM5 22.5c.4.2.9.2 1.5-.1l11.6-6.6-2.9-2.9L5 22.5zM5 1.5l10.2 9.6 2.9-2.9L6.5 1.6C5.9 1.3 5.4 1.3 5 1.5z"/></svg>
+        <span><span class="s">GET IT ON</span><span class="l">Google Play</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand"><img src="assets/logo-mark.png" alt=""><img class="wm" src="assets/wordmark-cream.png" alt="Zapshot"></div>
+        <p style="color:var(--ink-faint);margin-top:14px;max-width:32ch">Daily Vlog Wall.<br>your friends' day, stacked into one wall.</p>
+      </div>
+      <div class="foot-col">
+        <h4>App</h4>
+        <a href="#how">How it works</a>
+        <a href="#features">Features</a>
+        <a href="#ambassador">Ambassador</a>
+        <a href="#download">Download</a>
+      </div>
+      <div class="foot-col">
+        <h4>Legal</h4>
+        <a href="https://zapshot.me/privacy" target="_blank" rel="noopener">Privacy Policy</a>
+        <a href="https://zapshot.me/terms" target="_blank" rel="noopener">Terms of Use</a>
+        <a href="https://zapshot.me/guidelines" target="_blank" rel="noopener">Community Guidelines</a>
+      </div>
+      <div class="foot-col">
+        <h4>Social</h4>
+        <a href="https://www.instagram.com/zapshotapp/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://x.com/Zapshotapp" target="_blank" rel="noopener">X</a>
+        <a href="https://www.tiktok.com/@zapshot_app" target="_blank" rel="noopener">TikTok</a>
+        <a href="https://www.linkedin.com/company/zapshot" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+      <div class="foot-col company">
+        <h4>Company</h4>
+        <img class="ph7-logo" src="assets/ph7-crop.png" alt="PH7, ltd.">
+        <dl>
+          <div><dt>Name</dt><dd>PH7, ltd.</dd></div>
+          <div><dt>Business</dt><dd>Development &amp; operation of the social app Zapshot</dd></div>
+          <div><dt>Location</dt><dd>Los Angeles, CA, USA</dd></div>
+          <div><dt>Contact</dt><dd><a href="mailto:info@ph7.ltd">info@ph7.ltd</a></dd></div>
+        </dl>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 PH7, ltd. All rights reserved.</span>
+      <span>Los Angeles, CA</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+const fine=matchMedia('(pointer:fine)').matches;
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* scroll progress */
+const progressBar=document.querySelector('.progress i');
+addEventListener('scroll',()=>{
+  const max=document.documentElement.scrollHeight-innerHeight;
+  progressBar.style.width=(max>0?scrollY/max*100:0)+'%';
+},{passive:true});
+
+/* active nav link */
+const navLinks=[...document.querySelectorAll('.nav-links a[href^="#"]')].filter(a=>a.getAttribute('href').length>1);
+const secIo=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(e.isIntersecting){
+      navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id));
+    }
+  });
+},{rootMargin:'-40% 0px -55% 0px'});
+['how','features','gallery','ambassador','download'].forEach(id=>{
+  const s=document.getElementById(id);if(s)secIo.observe(s);
+});
+
+if(fine&&!reduced){
+  /* hero parallax */
+  const hero=document.querySelector('.hero');
+  const wall=document.querySelector('.wall');
+  const glow=document.querySelector('.hero-glow');
+  hero.addEventListener('mousemove',e=>{
+    const r=hero.getBoundingClientRect();
+    const nx=(e.clientX-r.left)/r.width*2-1;
+    const ny=(e.clientY-r.top)/r.height*2-1;
+    wall.style.setProperty('--wx',nx*-14+'px');
+    wall.style.setProperty('--wy',ny*-10+'px');
+    glow.style.setProperty('--gx',nx*30+'px');
+    glow.style.setProperty('--gy',ny*24+'px');
+  });
+  hero.addEventListener('mouseleave',()=>{
+    ['--wx','--wy'].forEach(p=>wall.style.setProperty(p,'0px'));
+    ['--gx','--gy'].forEach(p=>glow.style.setProperty(p,'0px'));
+  });
+
+  /* 3D tilt on cards */
+  document.querySelectorAll('.feature,.style-card').forEach(card=>{
+    card.addEventListener('mousemove',e=>{
+      const r=card.getBoundingClientRect();
+      const nx=(e.clientX-r.left)/r.width*2-1;
+      const ny=(e.clientY-r.top)/r.height*2-1;
+      card.style.transform=`translateY(-4px) rotateX(${ny*-4}deg) rotateY(${nx*5}deg)`;
+    });
+    card.addEventListener('mouseleave',()=>{card.style.transform=''});
+  });
+
+  /* magnetic buttons */
+  document.querySelectorAll('.btn,.store-btn').forEach(btn=>{
+    btn.addEventListener('mousemove',e=>{
+      const r=btn.getBoundingClientRect();
+      const nx=(e.clientX-r.left)/r.width*2-1;
+      const ny=(e.clientY-r.top)/r.height*2-1;
+      btn.style.transform=`translate(${nx*5}px,${ny*4-2}px)`;
+    });
+    btn.addEventListener('mouseleave',()=>{btn.style.transform=''});
+  });
+}
+
+/* scroll dive — scrub-driven 3D flight (scroll-world mechanic, asset-based) */
+const dive=document.getElementById('dive');
+if(dive&&!reduced){
+  const cards=[...dive.querySelectorAll('.dive-card')].map(el=>({
+    el,x:+el.dataset.x,y:+el.dataset.y,z:+el.dataset.z,r:+el.dataset.r
+  }));
+  const phases=[...dive.querySelectorAll('.dive-phase')];
+  const dots=[...dive.querySelectorAll('.dive-rail i')];
+  const sticky=dive.querySelector('.dive-sticky');
+  const stage=dive.querySelector('.dive-stage');
+  const CAM_TRAVEL=3250,FADE_AT=240,FADE_LEN=260;
+  let ticking=false;
+  function scrub(){
+    ticking=false;
+    const rect=dive.getBoundingClientRect();
+    const total=rect.height-innerHeight;
+    const p=Math.min(1,Math.max(0,-rect.top/total));
+    const camZ=p*CAM_TRAVEL;
+    const sway=Math.sin(p*Math.PI*2);
+    stage.style.transform=`translateX(${(sway*-52).toFixed(1)}px) rotate(${(sway*-1.4).toFixed(2)}deg)`;
+    for(const c of cards){
+      const z=c.z+camZ;
+      const op=z>FADE_AT?Math.max(0,1-(z-FADE_AT)/FADE_LEN):Math.min(1,(z+2600)/700);
+      c.el.style.transform=`translate(-50%,-50%) translate3d(${c.x}vw,${c.y}vh,${z}px) rotate(${c.r}deg) rotateY(${(-c.x*.55).toFixed(1)}deg)`;
+      c.el.style.opacity=op.toFixed(3);
+    }
+    const band=p<0.34?0:p<0.72?1:2;
+    phases.forEach((ph,i)=>ph.classList.toggle('on',i===band));
+    dots.forEach((d,i)=>d.classList.toggle('on',i===band));
+    sticky.style.setProperty('--dp',p.toFixed(3));
+  }
+  addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(scrub)}},{passive:true});
+  addEventListener('resize',scrub);
+  scrub();
+}
+
+/* gallery drag-to-scroll */
+const track=document.querySelector('.gallery-track');
+let dragging=false,startX=0,startScroll=0;
+track.addEventListener('pointerdown',e=>{
+  dragging=true;startX=e.clientX;startScroll=track.scrollLeft;
+  track.setPointerCapture(e.pointerId);
+});
+track.addEventListener('pointermove',e=>{
+  if(!dragging)return;
+  const dx=e.clientX-startX;
+  if(Math.abs(dx)>4)track.classList.add('dragging');
+  track.scrollLeft=startScroll-dx;
+});
+['pointerup','pointercancel'].forEach(ev=>track.addEventListener(ev,()=>{
+  dragging=false;track.classList.remove('dragging');
+}));
+</script>
+</body>
+</html>
