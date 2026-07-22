@@ -524,6 +524,55 @@ footer{padding:72px 0 48px;border-top:1px solid var(--line);font-size:13px}
 .foot-col.company dd a{color:var(--ink-dim);display:inline;margin:0}
 .foot-col.company dd a:hover{color:var(--yellow)}
 
+/* ---------- playful details ---------- */
+.spark{
+  position:fixed;width:5px;height:5px;border-radius:1.5px;
+  pointer-events:none;z-index:300;transform:translate(-50%,-50%);
+  animation:sparkFly .55s ease-out forwards;
+}
+@keyframes sparkFly{to{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(0) rotate(90deg);opacity:0}}
+.brand:hover img:first-child{animation:logoWiggle .5s ease-in-out}
+@keyframes logoWiggle{25%{transform:rotate(-9deg)}60%{transform:rotate(7deg)}100%{transform:rotate(0)}}
+.wall-clock{
+  position:absolute;z-index:5;top:18px;left:-6px;transform:rotate(-3deg);
+  background:rgba(20,20,18,.66);backdrop-filter:blur(8px);
+  border:1px solid var(--line);border-radius:999px;
+  padding:8px 14px;font-family:var(--font-mono);font-size:11px;
+  letter-spacing:.08em;color:var(--ink-dim);
+  display:flex;align-items:center;gap:8px;white-space:nowrap;
+}
+.wall-clock b{color:var(--yellow);font-weight:500}
+.wall-clock svg{width:11px;height:11px}
+.wall-chip.done{background:var(--teal)}
+.wall-chip.done .bar i{width:100%;animation:none}
+/* feature icon hover play */
+.feature:hover .f-ico{background:rgba(240,230,42,.14)}
+.f1:hover .f-ico svg{animation:ping 1.1s ease-in-out infinite}
+@keyframes ping{50%{transform:scale(1.18)}}
+.f2:hover .f-ico{animation:flash .7s}
+@keyframes flash{30%{background:rgba(240,230,42,.85)}}
+.f3:hover .f-ico svg{animation:wiggle2 .6s ease-in-out}
+@keyframes wiggle2{25%{transform:rotate(-10deg)}65%{transform:rotate(8deg)}}
+.f4:hover .f-ico svg{animation:shuffle .7s ease-in-out}
+@keyframes shuffle{30%{transform:translate(2px,-2px)}60%{transform:translate(-2px,2px)}}
+.f5:hover .f-ico svg{animation:eq .5s ease-in-out infinite}
+@keyframes eq{50%{transform:scaleY(1.35)}}
+.f6:hover .f-ico svg{animation:blinkEye 1.4s ease-in-out infinite}
+@keyframes blinkEye{0%,86%,100%{transform:scaleY(1)}92%{transform:scaleY(.12)}}
+/* style card visuals play */
+.style-card.s1:hover .vis svg{animation:ping 1s ease-in-out infinite}
+.style-card.s2:hover .vis svg{animation:filmroll .5s ease-in-out infinite}
+@keyframes filmroll{50%{transform:translateY(-3px)}}
+.style-card.s3:hover .vis svg{animation:creditsUp 1.2s linear infinite}
+@keyframes creditsUp{50%{transform:translateY(-2.5px)}}
+.style-card.s4:hover .vis svg{animation:starSpin .8s ease-in-out}
+@keyframes starSpin{50%{transform:rotate(12deg) scale(1.08)}}
+/* gallery candid tilt */
+.gallery-track .shot:nth-child(odd){transform:rotate(-1.3deg)}
+.gallery-track .shot:nth-child(even){transform:rotate(1.1deg)}
+.gallery-track .shot:hover{transform:translateY(-8px) rotate(0deg)}
+.foot-zap svg{width:12px;height:12px;vertical-align:-1px;margin:0 3px}
+
 /* reveal */
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
 .reveal.in{opacity:1;transform:none}
@@ -605,7 +654,8 @@ footer{padding:72px 0 48px;border-top:1px solid var(--line);font-size:13px}
           </div>
         </div>
       </div>
-      <div class="wall-chip"><span>Exporting today's vlog</span><span class="bar"><i></i></span><span class="mono">AUTO</span></div>
+      <div class="wall-clock"><svg><use href="#bolt" fill="#f0e62a"/></svg><span id="clock-line">…</span></div>
+      <div class="wall-chip"><span id="chip-text">Exporting today's vlog</span><span class="bar"><i></i></span><span class="mono" id="chip-tag">AUTO</span></div>
     </div>
   </div>
   <div class="scroll-hint">Scroll into today</div>
@@ -718,25 +768,25 @@ footer{padding:72px 0 48px;border-top:1px solid var(--line);font-size:13px}
       <p>Match the style to how the day felt. You'll never open an editing app again.</p>
     </div>
     <div class="styles-grid reveal">
-      <div class="style-card">
+      <div class="style-card s1">
         <span class="idx">STYLE / 01</span>
         <div class="vis"><svg viewBox="0 0 64 52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="2" y="2" width="60" height="48" rx="7"/><path d="M26 18l14 8-14 8V18z" fill="currentColor" stroke="none"/></svg></div>
         <span class="en">Vlog</span>
         <p>The classic daily vlog. Your day at its own pace.</p>
       </div>
-      <div class="style-card">
+      <div class="style-card s2">
         <span class="idx">STYLE / 02</span>
         <div class="vis"><svg viewBox="0 0 64 52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="2" y="2" width="60" height="48" rx="5"/><path d="M12 2v48M52 2v48" opacity=".7"/><rect x="5.5" y="7" width="3.5" height="5" rx="1" fill="currentColor" stroke="none"/><rect x="5.5" y="17" width="3.5" height="5" rx="1" fill="currentColor" stroke="none"/><rect x="5.5" y="27" width="3.5" height="5" rx="1" fill="currentColor" stroke="none"/><rect x="5.5" y="37" width="3.5" height="5" rx="1" fill="currentColor" stroke="none"/><rect x="55" y="7" width="3.5" height="5" rx="1" fill="currentColor" stroke="none"/><rect x="55" y="17" width="3.5" height="5" rx="1" fill="currentColor" stroke="none"/><rect x="55" y="27" width="3.5" height="5" rx="1" fill="currentColor" stroke="none"/><rect x="55" y="37" width="3.5" height="5" rx="1" fill="currentColor" stroke="none"/></svg></div>
         <span class="en">Film Strip</span>
         <p>Frame by frame, like old film. A little nostalgic.</p>
       </div>
-      <div class="style-card">
+      <div class="style-card s3">
         <span class="idx">STYLE / 03</span>
         <div class="vis"><svg viewBox="0 0 64 52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="2" width="60" height="48" rx="7"/><path d="M22 15h20M18 22h28M24 29h16M27 36h10" opacity=".8"/></svg></div>
         <span class="en">Credits</span>
         <p>End-credits style. Today's cast: your usual friends.</p>
       </div>
-      <div class="style-card">
+      <div class="style-card s4">
         <span class="idx">STYLE / 04</span>
         <div class="vis"><svg viewBox="0 0 64 52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="2" y="2" width="60" height="48" rx="7"/><path d="M2 12h60M2 40h60" opacity=".7"/><path d="M32 19l2.4 5 5.6.7-4.1 3.8 1 5.5-4.9-2.7-4.9 2.7 1-5.5-4.1-3.8 5.6-.7 2.4-5z" fill="currentColor" stroke="none"/></svg></div>
         <span class="en">Trailer</span>
@@ -753,37 +803,37 @@ footer{padding:72px 0 48px;border-top:1px solid var(--line);font-size:13px}
       <h2>Every feature brings you closer.<br><span class="en">Nothing else made the cut.</span></h2>
     </div>
     <div class="features-grid reveal">
-      <div class="feature">
+      <div class="feature f1">
         <div class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="2.2" fill="currentColor" stroke="none"/><path d="M8.5 15.5a5 5 0 010-7M15.5 8.5a5 5 0 010 7" /><path d="M6 18a9 9 0 010-12M18 6a9 9 0 010 12" opacity=".55"/></svg></div>
         <span class="f-en">Friend's Moments</span>
         <h3>Share the moment, live</h3>
         <p>Your close friends' "right now," as it happens. No read receipts, no follower counts — just a comfortable circle.</p>
       </div>
-      <div class="feature">
+      <div class="feature f2">
         <div class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="3" y="6" width="13" height="15" rx="3"/><rect x="12" y="3" width="9" height="10" rx="2.5" opacity=".65"/><circle cx="9.5" cy="13.5" r="2.6"/></svg></div>
         <span class="f-en">ZapMoment</span>
         <h3>Both sides, one shot</h3>
         <p>Dual camera captures the view and your reaction together — the whole feel of the moment.</p>
       </div>
-      <div class="feature">
+      <div class="feature f3">
         <div class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 01-12.7 7.4L3 20l1.1-5.3A8.5 8.5 0 1121 11.5z"/><path d="M8.5 10v3M12 8.5v6M15.5 10v3"/></svg></div>
         <span class="f-en">Type or Talk</span>
         <h3>Type or talk</h3>
         <p>Text or voice, whichever feels right. Either way, they'll hear you.</p>
       </div>
-      <div class="feature">
+      <div class="feature f4">
         <div class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="2" fill="currentColor" stroke="none" opacity=".9"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2" opacity=".55"/></svg></div>
         <span class="f-en">Home Widget</span>
         <h3>Friends on your home screen</h3>
         <p>No app to open — your friends' clips flow straight into the widget.</p>
       </div>
-      <div class="feature">
+      <div class="feature f5">
         <div class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 10v4M8 7v10M12 4v16M16 7v10M20 10v4"/></svg></div>
         <span class="f-en">ZapVoice</span>
         <h3>An AI twin of your voice</h3>
         <p>Type a message and it arrives in your voice. Even on busy days, the warmth stays in.</p>
       </div>
-      <div class="feature">
+      <div class="feature f6">
         <div class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></svg></div>
         <span class="f-en">Peekable Chat</span>
         <h3>Peek before you join</h3>
@@ -909,7 +959,7 @@ footer{padding:72px 0 48px;border-top:1px solid var(--line);font-size:13px}
     </div>
     <div class="foot-bottom">
       <span>© 2026 PH7, ltd. All rights reserved.</span>
-      <span>Los Angeles, CA</span>
+      <span class="foot-zap">Made with<svg><use href="#bolt" fill="#f0e62a"/></svg>in Los Angeles, CA</span>
     </div>
   </div>
 </footer>
@@ -1020,6 +1070,59 @@ if(dive&&!reduced){
   addEventListener('resize',scrub);
   scrub();
 }
+
+/* playful details */
+if(fine&&!reduced){
+  document.addEventListener('pointerdown',e=>{
+    if(e.button!==0)return;
+    for(let i=0;i<6;i++){
+      const s=document.createElement('i');
+      s.className='spark';
+      const a=Math.random()*Math.PI*2,d=22+Math.random()*28;
+      s.style.left=e.clientX+'px';s.style.top=e.clientY+'px';
+      s.style.background=i%3===2?'#3ceaa7':'#f0e62a';
+      s.style.setProperty('--dx',(Math.cos(a)*d).toFixed(0)+'px');
+      s.style.setProperty('--dy',(Math.sin(a)*d).toFixed(0)+'px');
+      document.body.appendChild(s);
+      setTimeout(()=>s.remove(),600);
+    }
+  });
+}
+
+/* live wall clock — the day fills up as it passes */
+const clockLine=document.getElementById('clock-line');
+function tickClock(){
+  const n=new Date();
+  const hh=String(n.getHours()).padStart(2,'0'),mm=String(n.getMinutes()).padStart(2,'0');
+  const pct=Math.round((n.getHours()*60+n.getMinutes())/1440*100);
+  clockLine.innerHTML=`<b>${hh}:${mm}</b>&nbsp; your wall is ${pct}% stacked`;
+}
+if(clockLine){tickClock();setInterval(tickClock,30000)}
+
+/* export chip completes every few seconds */
+const chip=document.querySelector('.wall-chip'),chipText=document.getElementById('chip-text'),chipTag=document.getElementById('chip-tag');
+if(chip&&!reduced){
+  setInterval(()=>{
+    chip.classList.add('done');
+    chipText.textContent='vlog_tonight.mp4 exported';
+    chipTag.textContent='DONE';
+    setTimeout(()=>{
+      chip.classList.remove('done');
+      chipText.textContent="Exporting today's vlog";
+      chipTag.textContent='AUTO';
+    },2200);
+  },7500);
+}
+
+/* tab away title */
+const realTitle=document.title;
+document.addEventListener('visibilitychange',()=>{
+  document.title=document.hidden?'⚡ your wall is still stacking…':realTitle;
+});
+
+/* console easter egg */
+console.log('%c⚡ Zapshot','font:italic 900 40px Archivo,sans-serif;color:#f0e62a;text-shadow:3px 3px 0 #3ceaa7;',
+'\n\nToday\'s cast: you and your friends.\nBy tonight, this console session becomes a vlog.\n\nWant to build this? → info@ph7.ltd');
 
 /* gallery drag-to-scroll */
 const track=document.querySelector('.gallery-track');
