@@ -150,17 +150,32 @@ img{max-width:100%;display:block}
   position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
   transform:scale(1.02) translate3d(var(--wx,0px),var(--wy,0px),0);
   transition:transform .4s cubic-bezier(.2,.8,.2,1);
+  perspective:1100px;perspective-origin:50% 45%;
+}
+.phone-3d{
+  height:100%;
+  transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
+  transform-style:preserve-3d;
+  transition:transform .35s cubic-bezier(.2,.8,.2,1);
 }
 .phone{
   --tilt:2.5deg;
   position:relative;height:100%;
   transform:rotate(var(--tilt));
   transition:transform .9s cubic-bezier(.34,1.56,.64,1);
+  transform-style:preserve-3d;
   border-radius:50px;
   padding:9px;
   background:linear-gradient(160deg,#3a3a3e,#17171a 30%,#1e1e22 70%,#0c0c0e);
   border:1px solid rgba(244,242,234,.22);
   box-shadow:0 34px 90px rgba(0,0,0,.6),inset 0 0 3px rgba(255,255,255,.12);
+}
+.phone-back{
+  position:absolute;inset:0;border-radius:50px;
+  transform:translateZ(-17px);
+  background:linear-gradient(160deg,#2b2b2f,#0a0a0c 60%);
+  border:1px solid rgba(244,242,234,.1);
+  box-shadow:0 30px 70px rgba(0,0,0,.55);
 }
 .phone::before{ /* power button */
   content:"";position:absolute;right:-3px;top:21%;width:3px;height:70px;
@@ -172,7 +187,7 @@ img{max-width:100%;display:block}
   box-shadow:0 56px 0 #38383c;
 }
 .phone-island{
-  position:absolute;top:22px;left:50%;transform:translateX(-50%);
+  position:absolute;top:22px;left:50%;transform:translateX(-50%) translateZ(6px);
   width:88px;height:24px;border-radius:99px;background:#000;z-index:3;
   box-shadow:inset 0 0 2px rgba(255,255,255,.14);
 }
@@ -643,9 +658,12 @@ footer{padding:72px 0 48px;border-top:1px solid var(--line);font-size:13px}
     </div>
     <div class="wall-frame reveal">
       <div class="wall" aria-hidden="true">
-        <div class="phone" id="hero-phone">
-          <video class="vlog-video" data-set-count="4" src="assets/vlog-preview-1.mp4" poster="assets/vlog-poster-1.jpg" autoplay muted playsinline></video>
-          <div class="phone-island"></div>
+        <div class="phone-3d" id="hero-phone-3d">
+          <div class="phone" id="hero-phone">
+            <div class="phone-back"></div>
+            <video class="vlog-video" data-set-count="4" src="assets/vlog-preview-1.mp4" poster="assets/vlog-poster-1.jpg" autoplay muted playsinline></video>
+            <div class="phone-island"></div>
+          </div>
         </div>
       </div>
       <div class="wall-clock"><svg><use href="#bolt" fill="#f0e62a"/></svg><span id="clock-line">…</span></div>
@@ -992,6 +1010,7 @@ if(fine&&!reduced){
   const hero=document.querySelector('.hero');
   const wall=document.querySelector('.wall');
   const glow=document.querySelector('.hero-glow');
+  const phone3d=document.getElementById('hero-phone-3d');
   hero.addEventListener('mousemove',e=>{
     const r=hero.getBoundingClientRect();
     const nx=(e.clientX-r.left)/r.width*2-1;
@@ -1000,10 +1019,15 @@ if(fine&&!reduced){
     wall.style.setProperty('--wy',ny*-10+'px');
     glow.style.setProperty('--gx',nx*30+'px');
     glow.style.setProperty('--gy',ny*24+'px');
+    if(phone3d){
+      phone3d.style.setProperty('--ry',nx*9+'deg');
+      phone3d.style.setProperty('--rx',ny*-7+'deg');
+    }
   });
   hero.addEventListener('mouseleave',()=>{
     ['--wx','--wy'].forEach(p=>wall.style.setProperty(p,'0px'));
     ['--gx','--gy'].forEach(p=>glow.style.setProperty(p,'0px'));
+    if(phone3d)['--rx','--ry'].forEach(p=>phone3d.style.setProperty(p,'0deg'));
   });
 
   /* 3D tilt on cards */
