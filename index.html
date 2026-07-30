@@ -529,6 +529,7 @@ section{padding:120px 0}
   overflow-x:auto;scroll-snap-type:x mandatory;
   scrollbar-width:none;
   cursor:grab;user-select:none;
+  touch-action:pan-y;
 }
 .gallery-track.dragging{cursor:grabbing;scroll-snap-type:none}
 .gallery-track.dragging .shot{pointer-events:none}
@@ -1373,6 +1374,13 @@ track.addEventListener('pointermove',e=>{
 ['pointerup','pointercancel'].forEach(ev=>track.addEventListener(ev,()=>{
   dragging=false;track.classList.remove('dragging');
 }));
+/* vertical wheel over the gallery must keep scrolling the page */
+track.addEventListener('wheel',e=>{
+  if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){
+    e.preventDefault();
+    window.scrollBy(0,e.deltaY);
+  }
+},{passive:false});
 </script>
 </body>
 </html>
