@@ -154,10 +154,13 @@ img{max-width:100%;display:block}
 }
 .phone-3d{
   height:100%;
-  transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
+  transform:rotate(var(--shoot,0deg)) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(var(--shootsc,1));
   transform-style:preserve-3d;
   transition:transform .35s cubic-bezier(.2,.8,.2,1);
 }
+.wall.shooting .phone-3d,.wall.unshooting .phone-3d{transition:transform .95s cubic-bezier(.34,1.56,.64,1)}
+.wall.shooting .phone-3d{--shoot:-90deg}
+@media(max-width:960px){.wall.shooting .phone-3d{--shootsc:.62}}
 .phone{
   --tilt:2.5deg;
   position:relative;height:100%;
@@ -188,7 +191,7 @@ img{max-width:100%;display:block}
 }
 .phone-island{
   position:absolute;top:22px;left:50%;transform:translateX(-50%) translateZ(6px);
-  width:88px;height:24px;border-radius:99px;background:#000;z-index:3;
+  width:88px;height:24px;border-radius:99px;background:#000;z-index:5;
   box-shadow:inset 0 0 2px rgba(255,255,255,.14);
 }
 .phone-island::after{ /* camera lens */
@@ -202,6 +205,89 @@ img{max-width:100%;display:block}
   background:#000;
 }
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+/* tilt & shoot demo */
+.tilt-btn{
+  position:absolute;z-index:6;bottom:88px;left:max(10px,calc(50% - 240px));
+  display:flex;align-items:center;gap:12px;
+  background:rgba(13,13,11,.88);color:var(--teal);
+  border:2px solid var(--teal);border-radius:999px;
+  padding:14px 22px;
+  font-weight:800;font-size:12px;letter-spacing:.1em;font-family:inherit;cursor:pointer;
+  box-shadow:0 16px 44px rgba(0,0,0,.55),0 0 0 0 rgba(60,234,167,.5);
+  animation:tiltPulse 2.6s ease-out infinite;
+  transition:transform .25s cubic-bezier(.34,1.56,.64,1),opacity .25s;
+}
+@keyframes tiltPulse{
+  0%{box-shadow:0 16px 44px rgba(0,0,0,.55),0 0 0 0 rgba(60,234,167,.5)}
+  60%{box-shadow:0 16px 44px rgba(0,0,0,.55),0 0 0 14px rgba(60,234,167,0)}
+  100%{box-shadow:0 16px 44px rgba(0,0,0,.55),0 0 0 0 rgba(60,234,167,0)}
+}
+.tilt-btn .ph{
+  position:relative;width:15px;height:24px;flex-shrink:0;
+  border:2.5px solid var(--teal);border-radius:4px;
+  transform-origin:50% 100%;
+  animation:tiltDemo 2.6s cubic-bezier(.34,1.56,.64,1) infinite;
+}
+.tilt-btn .ph::after{
+  content:"";position:absolute;top:2px;left:50%;transform:translateX(-50%);
+  width:5px;height:2px;border-radius:2px;background:var(--teal);
+}
+@keyframes tiltDemo{
+  0%,48%{transform:rotate(0)}
+  62%,86%{transform:rotate(-90deg)}
+  100%{transform:rotate(0)}
+}
+.tilt-btn:hover{transform:scale(1.07)}
+.tilt-btn:active{transform:scale(.95)}
+.tilt-btn.hide{opacity:0;pointer-events:none}
+@media(max-width:960px){.tilt-btn{bottom:78px;left:10px}}
+.wall.shooting .phone{transform:rotate(0deg)}
+.cam{
+  position:absolute;inset:9px;border-radius:41px;overflow:hidden;background:#000;
+  opacity:0;transition:opacity .28s ease;pointer-events:none;z-index:4;
+}
+.cam.on{opacity:1}
+.cam-rot{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(90deg)}
+.cam-vf{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cam-time{
+  position:absolute;top:12px;right:20px;color:#fff;font-weight:800;font-size:30px;
+  letter-spacing:.01em;text-shadow:0 2px 12px rgba(0,0,0,.6);
+}
+.cam-x{position:absolute;top:10px;left:18px;color:#fff;font-size:19px;opacity:.9;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.cam-rec{
+  position:absolute;top:18px;left:48px;color:#fff;font-family:var(--font-mono);
+  font-size:11px;letter-spacing:.14em;display:flex;align-items:center;gap:6px;
+  text-shadow:0 1px 6px rgba(0,0,0,.6);
+}
+.cam-rec i{width:8px;height:8px;border-radius:50%;background:#ff4b4b;animation:blink 1s ease-in-out infinite}
+.cam-controls{
+  position:absolute;right:14px;top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;gap:12px;
+}
+.cam-controls span{
+  width:34px;height:34px;border-radius:50%;background:rgba(13,13,11,.45);
+  backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;
+}
+.cam-controls svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.cam-shutter{
+  position:absolute;right:64px;top:50%;transform:translateY(-50%);
+  width:64px;height:64px;border-radius:50%;background:var(--yellow);
+  border:2.5px solid rgba(255,255,255,.92);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 24px rgba(0,0,0,.5);
+}
+.cam-shutter .bolt-ic{width:22px;height:auto;display:block}
+.cam-shutter .ring{position:absolute;inset:-7px;width:78px;height:78px;transform:rotate(-90deg)}
+.cam-shutter .ring circle{fill:none;stroke:#fff;stroke-width:3;stroke-dasharray:236;stroke-dashoffset:236}
+.cam.on .ring circle{transition:stroke-dashoffset 2s linear;stroke-dashoffset:0}
+.cam-zoom{
+  position:absolute;right:24px;bottom:16px;width:30px;height:30px;border-radius:50%;
+  background:rgba(13,13,11,.55);color:var(--yellow);font-size:11px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+}
+.cam-flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:6}
+.cam-flash.go{animation:camflash .5s ease-out}
+@keyframes camflash{0%{opacity:0}18%{opacity:.95}100%{opacity:0}}
 .wall-chip{
   position:absolute;z-index:5;left:50%;bottom:26px;transform:translateX(-50%) rotate(-2deg);
   background:var(--yellow);color:#0d0d0b;border-radius:14px;
@@ -677,12 +763,32 @@ footer{padding:72px 0 48px;border-top:1px solid var(--line);font-size:13px}
           <div class="phone" id="hero-phone">
             <div class="phone-back"></div>
             <video class="vlog-video" data-set-count="4" src="assets/vlog-preview-1.mp4?v=2" poster="assets/vlog-poster-1.jpg?v=2" autoplay muted playsinline></video>
+            <div class="cam" id="hero-cam" aria-hidden="true">
+              <div class="cam-rot">
+                <video class="cam-vf" muted loop playsinline preload="none"></video>
+                <div class="cam-x">&times;</div>
+                <div class="cam-rec"><i></i>REC</div>
+                <div class="cam-time">11:00am</div>
+                <div class="cam-controls">
+                  <span><svg viewBox="0 0 24 24"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.5 9a9 9 0 0 1 14.9-3.4L23 10M1 14l4.6 4.4A9 9 0 0 0 20.5 15"/></svg></span>
+                  <span><svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-2 8 9-12h-7l2-8z"/><line x1="3" y1="3" x2="21" y2="21"/></svg></span>
+                  <span><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg></span>
+                </div>
+                <div class="cam-shutter">
+                  <svg class="ring" viewBox="0 0 78 78"><circle cx="39" cy="39" r="37.5"/></svg>
+                  <img class="bolt-ic" src="assets/cam-bolt.png" alt="">
+                </div>
+                <div class="cam-zoom">1&times;</div>
+              </div>
+              <div class="cam-flash"></div>
+            </div>
             <div class="phone-island"></div>
           </div>
         </div>
       </div>
       <div class="wall-clock"><svg><use href="#bolt" fill="#f0e62a"/></svg><span id="clock-line">…</span></div>
       <div class="wall-chip"><span id="chip-text">Exporting today's vlog</span><span class="bar"><i></i></span><span class="mono" id="chip-tag">AUTO</span></div>
+      <button class="tilt-btn" id="tilt-btn" type="button"><span class="ph"></span>TILT &amp; SHOOT</button>
     </div>
   </div>
   <div class="scroll-hint">Scroll into today</div>
@@ -1039,7 +1145,7 @@ if(fine&&!reduced){
     wall.style.setProperty('--wy',ny*-10+'px');
     glow.style.setProperty('--gx',nx*30+'px');
     glow.style.setProperty('--gy',ny*24+'px');
-    if(phone3d){
+    if(phone3d&&!wall.classList.contains('shooting')&&!wall.classList.contains('unshooting')){
       phone3d.style.setProperty('--ry',nx*9+'deg');
       phone3d.style.setProperty('--rx',ny*-7+'deg');
     }
@@ -1155,6 +1261,47 @@ if(vlogVideo){
     prefetch(current%setCount+1);
   });
   if(reduced){vlogVideo.removeAttribute('autoplay');vlogVideo.pause()}
+}
+
+/* Tilt & Shoot: tip the phone sideways -> capture mode, record 2s, flash, back to the wall */
+const shootBtn=document.getElementById('tilt-btn');
+const heroCam=document.getElementById('hero-cam');
+if(shootBtn&&heroCam){
+  const wallEl=document.querySelector('.wall');
+  const phoneEl=document.getElementById('hero-phone');
+  const camRot=heroCam.querySelector('.cam-rot');
+  const vf=heroCam.querySelector('.cam-vf');
+  const camFlash=heroCam.querySelector('.cam-flash');
+  const camTime=heroCam.querySelector('.cam-time');
+  const SHOTS=['d0804','d0912','d1036','d1202','d1805','d2048'];
+  let busy=false;
+  shootBtn.addEventListener('click',()=>{
+    if(busy)return;busy=true;
+    shootBtn.classList.add('hide');
+    const p3=document.getElementById('hero-phone-3d');
+    if(p3){p3.style.setProperty('--rx','0deg');p3.style.setProperty('--ry','0deg')}
+    camRot.style.width=(phoneEl.clientHeight-18)+'px';
+    camRot.style.height=(phoneEl.clientWidth-18)+'px';
+    const d=new Date(),h12=d.getHours()%12||12;
+    camTime.textContent=`${h12}:${String(d.getMinutes()).padStart(2,'0')}${d.getHours()>=12?'pm':'am'}`;
+    vf.src=`assets/dive/${SHOTS[Math.floor(Math.random()*SHOTS.length)]}.mp4`;
+    wallEl.classList.add('shooting');
+    setTimeout(()=>{
+      heroCam.classList.add('on');
+      vf.play().catch(()=>{});
+      setTimeout(()=>{
+        camFlash.classList.add('go');
+        setTimeout(()=>{
+          heroCam.classList.remove('on');vf.pause();camFlash.classList.remove('go');
+          wallEl.classList.remove('shooting');wallEl.classList.add('unshooting');
+          setTimeout(()=>{
+            wallEl.classList.remove('unshooting');
+            shootBtn.classList.remove('hide');busy=false;
+          },1000);
+        },230);
+      },2100);
+    },950);
+  });
 }
 
 /* playful details */
