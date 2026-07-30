@@ -676,7 +676,7 @@ footer{padding:72px 0 48px;border-top:1px solid var(--line);font-size:13px}
         <div class="phone-3d" id="hero-phone-3d">
           <div class="phone" id="hero-phone">
             <div class="phone-back"></div>
-            <video class="vlog-video" data-set-count="4" src="assets/vlog-preview-1.mp4" poster="assets/vlog-poster-1.jpg" autoplay muted playsinline></video>
+            <video class="vlog-video" data-set-count="4" src="assets/vlog-preview-1.mp4?v=2" poster="assets/vlog-poster-1.jpg?v=2" autoplay muted playsinline></video>
             <div class="phone-island"></div>
           </div>
         </div>
@@ -732,7 +732,7 @@ footer{padding:72px 0 48px;border-top:1px solid var(--line);font-size:13px}
       <h3>By night —<br>one vlog.</h3>
       <div class="final-card" aria-hidden="true">
         <div class="final-bar"><svg><use href="#bolt" fill="#f0e62a"/></svg>vlog_tonight.mp4<span class="done">DONE</span></div>
-        <video src="assets/vlog-preview-1.mp4" poster="assets/vlog-poster-1.jpg" muted loop playsinline preload="metadata"></video>
+        <video src="assets/vlog-preview-1.mp4?v=2" poster="assets/vlog-poster-1.jpg?v=2" muted loop playsinline preload="metadata"></video>
         <div class="final-progress"><i></i></div>
       </div>
       <p>Auto-edited. Pick a style, export in one tap.</p>
@@ -1139,11 +1139,11 @@ if(vlogVideo){
   const tilts=[2.5,-3.2,1.8,-2.6];
   let current=1+Math.floor(Math.random()*setCount);
   const setSrc=n=>{
-    vlogVideo.poster=`assets/vlog-poster-${n}.jpg`;
-    vlogVideo.src=`assets/vlog-preview-${n}.mp4`;
+    vlogVideo.poster=`assets/vlog-poster-${n}.jpg?v=2`;
+    vlogVideo.src=`assets/vlog-preview-${n}.mp4?v=2`;
   };
   const applyTilt=()=>{if(phone)phone.style.setProperty('--tilt',tilts[(current-1)%tilts.length]+'deg')};
-  const prefetch=n=>{fetch(`assets/vlog-preview-${n}.mp4`).catch(()=>{})};
+  const prefetch=n=>{fetch(`assets/vlog-preview-${n}.mp4?v=2`).catch(()=>{})};
   if(current>1)setSrc(current);
   applyTilt();
   prefetch(current%setCount+1);
